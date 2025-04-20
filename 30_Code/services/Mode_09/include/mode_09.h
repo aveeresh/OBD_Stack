@@ -1,10 +1,6 @@
 #ifndef MODE_09_H
 #define MODE_09_H
 
-#include <stdint.h>   // for uint8_t, uint16_t, etc.
-#include "Types.h"
-#include <string.h> 
-
 // CAN Message structure
 typedef struct {
     uint32 id;       // CAN ID
