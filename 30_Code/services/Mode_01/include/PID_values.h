@@ -1,0 +1,30 @@
+#ifndef PID_VALUES_H
+#define PID_VALUES_H
+
+// PID Value Macros
+#define PID_VAL_SUPPORTED_00             0x00000030  // PID_SUPPORTED_00 (supports 0x04 and 0x05)
+#define PID_VAL_ENGINE_LOAD_04           75          // PID_ENGINE_LOAD_04
+#define PID_VAL_COOLANT_TEMP_05          90          // PID_COOLANT_TEMP_05
+
+#define PID_VAL_SUPPORTED_20             0x00002A00  // PID_SUPPORTED_20 (supports 0x2D and 0x2F)
+#define PID_VAL_FUEL_RAIL_PRESSURE_2D    10          // PID_FUEL_RAIL_PRESSURE_2D
+#define PID_VAL_FUEL_LEVEL_2F            50          // PID_FUEL_LEVEL_2F
+
+#define PID_VAL_SUPPORTED_40             0x0C000000  // PID_SUPPORTED_40 (supports 0x45 and 0x46)
+#define PID_VAL_AMBIENT_TEMP_45          50          // PID_AMBIENT_TEMP_45
+#define PID_VAL_ABS_BARO_PRESSURE_46     20          // PID_ABS_BARO_PRESSURE_46
+
+#define PID_VAL_SUPPORTED_60             0x06000000  // PID_SUPPORTED_60 (supports 0x62 and 0x63)
+#define PID_VAL_COMMANDED_EQUIV_RATIO_62 70          // PID_COMMANDED_EQUIV_RATIO_62
+#define PID_VAL_ENGINE_REFERENCE_TORQUE_63 160        // PID_ENGINE_REFERENCE_TORQUE_63
+
+#define PID_VAL_SUPPORTED_80             0x00000121  // PID_SUPPORTED_80 (supports 0x80, 0x85, and 0x8E)
+#define PID_VAL_THROTTLE_POS_85         35          // PID_THROTTLE_POS_85
+#define PID_VAL_ENGINE_FRICTION_PERCENT_8E 5          // PID_ENGINE_FRICTION_PERCENT_8E
+
+#define PID_VAL_SUPPORTED_A0             0x00000005  // PID_SUPPORTED_A0 (supports 0xA0 and 0xA2)
+#define PID_VAL_ENGINE_PERCENT_TORQUE_A2 3           // PID_ENGINE_PERCENT_TORQUE_A2
+
+#define PID_VAL_SUPPORTED_C0             0x00000000  // PID_SUPPORTED_C0 (no specific PIDs supported)
+
+#endif // PID_VALUES_H
