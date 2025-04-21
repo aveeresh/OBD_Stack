@@ -1,12 +1,11 @@
 #include "Mode_09.h"
-#include "CAN_Driver.h"  // Include CAN communication library
-#include "Types.h"  
-
-void Mode_09_Req_Handler(CanMsg_t OBDRequest)
+#include "Types.h"
+ 
+void Mode_09_Req_Handler(can_msg_t OBDRequest)
 {
 	int i;
     uint8 PID = OBDRequest.data[2];  // Get the PID from the incoming message
-    CanMsg_t OBDResp;  // Declare a CAN response message
+    can_msg_t OBDResp;  // Declare a CAN response message
 
     OBDResp.id = 0x7E8;  // Set response CAN ID
 
@@ -23,7 +22,7 @@ void Mode_09_Req_Handler(CanMsg_t OBDRequest)
             OBDResp.data[4] = 0x00;
             OBDResp.data[5] = 0x04;
             OBDResp.data[6] = 0x00;
-         can_tp_transmit(can_idx, OBDResp, OBDResp.len);
+        can_tp_transmit(can_idx, OBDResp, OBDResp.len);
             break;
         }
         case 0x02: // VIN (17 characters)
@@ -40,19 +39,19 @@ void Mode_09_Req_Handler(CanMsg_t OBDRequest)
             OBDResp.data[5] = VIN[1];
             OBDResp.data[6] = VIN[2];
             OBDResp.data[7] = VIN[3];
-      can_tp_transmit(can_idx, OBDResp, OBDResp.len);
+     can_tp_transmit(can_idx, OBDResp, OBDResp.len);
 
             // Second frame
             OBDResp.data[0] = 0x21;
             for (i = 0; i < 7; i++)
                 OBDResp.data[i + 1] = VIN[i + 4];
-     can_tp_transmit(can_idx, OBDResp, OBDResp.len);
+   can_tp_transmit(can_idx, OBDResp, OBDResp.len);
 
             // Third frame
             OBDResp.data[0] = 0x22;
             for (i = 0; i < 7; i++)
                 OBDResp.data[i + 1] = VIN[i + 11];
-       can_tp_transmit(can_idx, OBDResp, OBDResp.len);
+    can_tp_transmit(can_idx, OBDResp, OBDResp.len);
             break;
         }
 
@@ -70,13 +69,13 @@ void Mode_09_Req_Handler(CanMsg_t OBDRequest)
             OBDResp.data[5] = CALID[1];
             OBDResp.data[6] = CALID[2];
             OBDResp.data[7] = CALID[3];
-          can_tp_transmit(can_idx, OBDResp, OBDResp.len);
+         can_tp_transmit(can_idx, OBDResp, OBDResp.len);
 
             // Second frame
             OBDResp.data[0] = 0x21;
             for (i = 0; i < 7; i++)
                 OBDResp.data[i + 1] = CALID[i + 4];
-          can_tp_transmit(can_idx, OBDResp, OBDResp.len);
+        can_tp_transmit(can_idx, OBDResp, OBDResp.len);
 
             // Third frame
             OBDResp.data[0] = 0x22;
