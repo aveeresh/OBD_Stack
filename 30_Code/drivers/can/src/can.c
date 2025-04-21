@@ -48,7 +48,7 @@ void can_transmit(can_idx_t CanIdx, can_msg_t msg)
 		//while(!((CAN1->GSR)&(0x01<<3)));
 }
 
-uint8 CAN_Receive(uint8 CanIdx, can_msg_t *msg)
+uint8 can_receive(can_idx_t CanIdx, can_msg_t *msg)
 {
 	if (CanRegs[CanIdx]->SR.B.RBS1) {
 		// Check if Receive Buffer has a message
