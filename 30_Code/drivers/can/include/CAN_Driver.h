@@ -25,7 +25,7 @@ typedef struct {
 void can_init(can_idx_t CanIdx); 
 void can_set_baudrate(can_idx_t CanIdx, uint32 baudrate_Kbps, uint32 PCLK_MHz, uint8 SJW, uint8 TSEG1, uint8 TSEG2);
 void can_transmit(can_idx_t CanIdx, can_msg_t TxMsg);
-uint8 can_receive(can_idx_t CanIdx, can_msg_t TxMsg); 
+uint8 can_receive(can_idx_t CanIdx, can_msg_t *RxMsg); 
 void can_register_callback(uint32 id, can_callback_t callback);
 
 // These handlers should be linked in your startup code or vector table
