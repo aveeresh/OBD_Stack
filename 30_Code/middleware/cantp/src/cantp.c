@@ -1,17 +1,4 @@
-
 #include "cantp.h"
-#include "CAN_Driver.h"
-
-
-#define SINGLE_FRAME 						0x00
-#define FIRST_FRAME  						0x10
-#define CONSEC_FRAME 						0x20
-#define FLOW_CONTROL_FRAME 			0x30
-
-#define FLOW_STATUS_CTS       	0x00
-#define FLOW_STATUS_WAIT      	0x01
-#define FLOW_STATUS_OVERFLOW  	0x02
-
 
 bool can_tp_transmit(can_idx_t can_idx, can_msg_t data, uint16 data_length) {
 	
@@ -51,7 +38,7 @@ bool can_tp_transmit(can_idx_t can_idx, can_msg_t data, uint16 data_length) {
         can_transmit(can_idx,frame);
 
         // Wait for Flow Control Frame
-        if (!can_receive(can_idx, fc)) {
+        if (!can_receive(can_idx, &fc)) {
 						
 						// Check if the frame is Flow Control Frame
 						if ((fc.data[0] & 0xF0) == FLOW_CONTROL_FRAME){
@@ -106,7 +93,7 @@ bool can_tp_transmit(can_idx_t can_idx, can_msg_t data, uint16 data_length) {
 						
 						
 						if (block_size != 0 && frames_sent == block_size) {  // Checking if no of frames sent is equal to block size
-                if (!can_receive(can_idx, fc) || (fc.data[0] & 0xF0) != FLOW_CONTROL_FRAME){
+                if (!can_receive(can_idx, &fc) || (fc.data[0] & 0xF0) != FLOW_CONTROL_FRAME){
 										return FALSE;
 								}
                 if ((fc.data[0] & 0x0F) == FLOW_STATUS_OVERFLOW){
@@ -118,6 +105,7 @@ bool can_tp_transmit(can_idx_t can_idx, can_msg_t data, uint16 data_length) {
 								}
                 frames_sent = 0;
             }
+						delay_ms(stmin); // Delay between Consecutive Frames
         }
     }
 		return TRUE;
@@ -132,7 +120,7 @@ bool can_tp_receive(can_idx_t can_idx, can_msg_t *data, uint16 data_length) {
     uint8 bytes_to_copy, block_size = 3, frames_received = 0;
 
     // Wait for first frame (Single or First Frame)
-    if (!can_receive(can_idx, frame)) {
+    if (!can_receive(can_idx, &frame)) {
         return FALSE;
     }
 
@@ -182,7 +170,7 @@ bool can_tp_receive(can_idx_t can_idx, can_msg_t *data, uint16 data_length) {
 
         // Receive Consecutive Frames
         while (offset < total_len) {
-            if (!can_receive(can_idx, frame)) {
+            if (!can_receive(can_idx, &frame)) {
                 return FALSE;
             }
 
