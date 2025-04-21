@@ -1,7 +1,6 @@
 #include "Mode_09.h"
 #include "CAN_Driver.h"  // Include CAN communication library
-#include "Types.h"
-#include <string.h>  
+#include "Types.h"  
 
 void Mode_09_Req_Handler(CanMsg_t OBDRequest)
 {
