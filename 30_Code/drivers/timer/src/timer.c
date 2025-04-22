@@ -41,10 +41,5 @@ uint32 get_time(void) {
 
 void delay_ms(uint32 delay) {
     uint32 start_time = get_time();
-		if(delay==1){
-				while ((get_time() - start_time) < delay);
-		}
-    else{
-				while ((get_time() - start_time) < delay-1);
-		}
+	while ((get_time() - start_time) < delay);
 }
