@@ -294,46 +294,76 @@ typedef struct
  * Define register collections here 
  *
 */
-typedef struct 
-{
-	volatile uint32 AFMR;
-	volatile uint32 SFF_sa;
-} Can_AccpFltrRegs_t;
 
-typedef struct 
-{
-	volatile uint32 CANTxSR;
-	volatile uint32 CANRxSR;
-	volatile uint32 CANMSR;
-}Can_CentralRegs_t;
 
-typedef struct 
+
+typedef union
 {
-	volatile Can_MOD_t MOD;    //Controls the operating mode of the CAN Controller.
-	volatile Can_CMR_t CMR;    //Command bits that affect the state of the CAN Controller
-	volatile Can_GSR_t GSR;    //Global Controller Status and Error Counters
-	volatile Can_ICR_t ICR;    // Interrupt status, Arbitration Lost Capture, Error Code Capture
-	volatile Can_IER_t IER;    //Interrupt Enable
-	volatile Can_BTR_t BTR;    // Bus Timing
-	volatile Can_EWL_t EWL;    // Error Warning Limit
-	volatile Can_SR_t SR;      // Status Register
-	volatile Can_RFS_t RFS;    // Receive frame status
-	volatile Can_RID_t RID;    // Received Identifier
-	volatile Can_RDA_t RDA;    // Received data bytes 1-4
-	volatile Can_RDB_t RDB;    // Received data bytes 5-8
-	volatile Can_TFI_t TFI1;   // Transmit frame info (Tx Buffer 1)
-	volatile Can_TID_t TID1;   // Transmit Identifier (Tx Buffer 1)
-	volatile Can_TDA_t TDA1;   // Transmit data bytes 1-4 (Tx Buffer 1)
-	volatile Can_TDB_t TDB1;   // Transmit data bytes 5-8 (Tx Buffer 1)
-	volatile Can_TFI_t TFI2;    // Transmit frame info (Tx Buffer 2)
-	volatile Can_TID_t TID2;    // Transmit Identifier (Tx Buffer 2)
-	volatile Can_TDA_t TDA2;    // Transmit data bytes 1-4 (Tx Buffer 2)
-	volatile Can_TDB_t TDB2;    // Transmit data bytes 5-8 (Tx Buffer 2)
-	volatile Can_TFI_t TFI3;    // Transmit frame info (Tx Buffer 3)
-	volatile Can_TID_t TID3;    // Transmit Identifier (Tx Buffer 3)
-	volatile Can_TDA_t TDA3;    // Transmit data bytes 1-4 (Tx Buffer 3)
-	volatile Can_TDB_t TDB3;    // Transmit data bytes 5-8 (Tx Buffer 3)
-}Can_GeneralRegs_t;
+    uint32 R;  
+    struct 
+    {
+        uint32 ACCOFF: 1;  
+        uint32 ACCBP: 1;   
+        uint32 eFCA: 1;    
+        uint32 : 29;       
+    } B;
+} AFMR_t;
+
+typedef union
+{
+    uint32 R;
+    struct
+    {
+        uint32 :2;
+        uint32 SFF_sa :9;
+        uint32 :21;
+    } B;
+} SFF_sa_t;
+
+typedef union
+{
+    uint32 R;
+    struct
+    {
+        uint32 :2;
+        uint32 SFF_GRP_sa :10;
+        uint32 :20;
+    } B;
+} SFF_GRP_sa_t;
+
+typedef union
+{
+    uint32 R;
+    struct
+    {
+        uint32 :2;
+        uint32 EFF_sa :9;
+        uint32 :21;
+    } B;
+} EFF_sa_t;
+
+typedef union
+{
+    uint32 R;
+    struct
+    {
+        uint32 :2;
+        uint32 EFF_GRP_sa :10;
+        uint32 :20;
+    } B;
+} EFF_GRP_sa_t;
+
+typedef union
+{
+    uint32 R;
+    struct
+    {
+        uint32 :2;
+        uint32 ENDofTable :10;
+        uint32 :20;
+    } B;
+} ENDofTable_t;
+
 
 
 typedef union
@@ -375,6 +405,7 @@ typedef union
 		uint32 ISE_QEI:1;	
 	}B;
 } ISER0_t;
+
 
 typedef union
 {
@@ -712,6 +743,7 @@ typedef union
 	}B;
 } IPR6_t;
 
+
 typedef union
 {
 	uint32 R;
@@ -752,6 +784,75 @@ typedef union
 	  uint32 :23;
 	}B;
 } STIR_t;
+
+ 
+/** @brief  Controller Area Network Acceptance Filter(CANAF) register structure definition */
+
+typedef struct
+{
+    volatile AFMR_t AFMR;
+    volatile SFF_sa_t SFF_sa;
+    volatile SFF_GRP_sa_t SFF_GRP_sa;
+    volatile EFF_sa_t EFF_sa;
+    volatile EFF_GRP_sa_t EFF_GRP_sa;
+    volatile ENDofTable_t ENDofTable;
+} Can_AF_Regs_t;
+
+/** @brief  Controller Area Network Central (CANCR) register structure definition */
+
+typedef struct 
+{
+	volatile uint32 CANTxSR;
+	volatile uint32 CANRxSR;
+	volatile uint32 CANMSR;
+}Can_CentralRegs_t;
+
+/** @brief  Controller Area Network Controller (CAN) register structure definition */
+
+
+typedef struct 
+{
+	volatile Can_MOD_t MOD;    //Controls the operating mode of the CAN Controller.
+	volatile Can_CMR_t CMR;    //Command bits that affect the state of the CAN Controller
+	volatile Can_GSR_t GSR;    //Global Controller Status and Error Counters
+	volatile Can_ICR_t ICR;    // Interrupt status, Arbitration Lost Capture, Error Code Capture
+	volatile Can_IER_t IER;    //Interrupt Enable
+	volatile Can_BTR_t BTR;    // Bus Timing
+	volatile Can_EWL_t EWL;    // Error Warning Limit
+	volatile Can_SR_t SR;      // Status Register
+	volatile Can_RFS_t RFS;    // Receive frame status
+	volatile Can_RID_t RID;    // Received Identifier
+	volatile Can_RDA_t RDA;    // Received data bytes 1-4
+	volatile Can_RDB_t RDB;    // Received data bytes 5-8
+	volatile Can_TFI_t TFI1;   // Transmit frame info (Tx Buffer 1)
+	volatile Can_TID_t TID1;   // Transmit Identifier (Tx Buffer 1)
+	volatile Can_TDA_t TDA1;   // Transmit data bytes 1-4 (Tx Buffer 1)
+	volatile Can_TDB_t TDB1;   // Transmit data bytes 5-8 (Tx Buffer 1)
+	volatile Can_TFI_t TFI2;    // Transmit frame info (Tx Buffer 2)
+	volatile Can_TID_t TID2;    // Transmit Identifier (Tx Buffer 2)
+	volatile Can_TDA_t TDA2;    // Transmit data bytes 1-4 (Tx Buffer 2)
+	volatile Can_TDB_t TDB2;    // Transmit data bytes 5-8 (Tx Buffer 2)
+	volatile Can_TFI_t TFI3;    // Transmit frame info (Tx Buffer 3)
+	volatile Can_TID_t TID3;    // Transmit Identifier (Tx Buffer 3)
+	volatile Can_TDA_t TDA3;    // Transmit data bytes 1-4 (Tx Buffer 3)
+	volatile Can_TDB_t TDB3;    // Transmit data bytes 5-8 (Tx Buffer 3)
+}Can_GeneralRegs_t;
+
+
+#define APB0_BASE         (0x40000000UL)
+
+//#define CANAF_RAM_BASE    (APB0_BASE + 0x38000)
+#define CANAF_BASE        (APB0_BASE + 0x3C000)
+#define CANCR_BASE        (APB0_BASE + 0x40000)
+#define CAN1_BASE         (APB0_BASE + 0x44000)
+#define CAN2_BASE         (APB0_BASE + 0x48000)
+
+//#define CANAF_RAM         ((CANAF_RAM_TypeDef *) CANAF_RAM_BASE)
+#define CANAF             ((Can_AF_Regs_t     *) CANAF_BASE    )
+#define CANCR             ((Can_CentralRegs_t     *) CANCR_BASE    )
+#define CAN1              ((Can_GeneralRegs_t     *) CAN1_BASE     )
+#define CAN2              ((Can_GeneralRegs_t     *) CAN2_BASE     )
+
 
 #define ISER0_t (*(volatile ISER0_t *) 0xE000E100)
 #define ISER1_t (*(volatile ISER1_t *) 0xE000E104)
