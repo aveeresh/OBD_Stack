@@ -56,24 +56,27 @@ class CanTransceiver:
         return(self.WriteSerialData(SerialData))
                 
     def GetCanMsg(self, RxCanMsg):
-        Data = self.SerialHandle.read(14)
-        Data = list(Data)
-        
-        if len(Data)!=13:
-            return(None)
-        else:        
-            #Check whether a valid serial data frame received
-            if Data[0]!=0xAA or Data[len(Data)-1]!=0x55:
-                RxCanMsg = None
-            else:
-                #Valid serial data frame, extract data 
-                RxCanMsg = self.CreateMessage()
-                RxCanMsg.arbitration_id = (Data[3]<<8 | Data[2])
-                for i in range(0,7):
-                    RxCanMsg.data[i] = Data[4+i]
+        try:
+            Data = self.SerialHandle.read(14)
+            Data = list(Data)
             
-            #print(RxCanMsg)
-            return(RxCanMsg)
+            if len(Data)!=13:
+                return(None)
+            else:        
+                #Check whether a valid serial data frame received
+                if Data[0]!=0xAA or Data[len(Data)-1]!=0x55:
+                    RxCanMsg = None
+                else:
+                    #Valid serial data frame, extract data 
+                    RxCanMsg = self.CreateMessage()
+                    RxCanMsg.arbitration_id = (Data[3]<<8 | Data[2])
+                    for i in range(0,7):
+                        RxCanMsg.data[i] = Data[4+i]
+                
+                #print(RxCanMsg)
+                return(RxCanMsg)
+        except:
+            return(None)
                 
     def SendTxMsgPeriodic(self, msg, cycle_time):
         with can.interface.Bus(interface=self.CanDevice, bitrate=self.BaudRate*1000) as bus:

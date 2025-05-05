@@ -1325,7 +1325,7 @@
   <action name="actionConnect">
    <property name="icon">
     <iconset>
-     <normaloff>C:/Users/veere/.designer/backup/icons/connect.png</normaloff>C:/Users/veere/.designer/backup/icons/connect.png</iconset>
+     <normaloff>icons/connect.png</normaloff>icons/connect.png</iconset>
    </property>
    <property name="text">
     <string>Connect</string>
@@ -1339,7 +1339,7 @@
   <action name="actionSettings">
    <property name="icon">
     <iconset>
-     <normaloff>C:/Users/veere/.designer/backup/icons/settings.png</normaloff>C:/Users/veere/.designer/backup/icons/settings.png</iconset>
+     <normaloff>icons/settings.png</normaloff>icons/settings.png</iconset>
    </property>
    <property name="text">
     <string>Settings</string>
@@ -1348,7 +1348,7 @@
   <action name="actionDisconnect">
    <property name="icon">
     <iconset>
-     <normaloff>C:/Users/veere/.designer/backup/icons/disconnect.png</normaloff>C:/Users/veere/.designer/backup/icons/disconnect.png</iconset>
+     <normaloff>icons/disconnect.png</normaloff>icons/disconnect.png</iconset>
    </property>
    <property name="text">
     <string>Disconnect</string>
