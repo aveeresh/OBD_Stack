@@ -91,4 +91,5 @@ typedef struct {
 
 #define TIMER0      ((volatile Timer_Regs_t*) 0x40004000)
 #define ISER0       (*(volatile uint32*) 0xE000E100)
+#define IPR0 				((volatile uint8 *)0xE000E400)
 #endif 

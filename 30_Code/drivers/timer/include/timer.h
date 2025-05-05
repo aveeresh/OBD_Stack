@@ -10,4 +10,3 @@ uint32 get_time(void);
 void delay_ms(uint32 delay);
 
 #endif
-
