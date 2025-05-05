@@ -5,7 +5,7 @@ bool can_tp_transmit(can_idx_t can_idx, can_msg_t data, uint16 data_length) {
 		can_msg_t frame = {0}, fc, cf = {0};
 		uint8 i, block_size, stmin, frames_sent=0, sn=1, bytes_left, bytes_to_copy;
 		uint16 offset = 6;
-	
+		
     if(data_length <= 7){ //Transmit single frame
 		
 				frame.id = data.id;    // Response ID
@@ -22,7 +22,7 @@ bool can_tp_transmit(can_idx_t can_idx, can_msg_t data, uint16 data_length) {
 		
     } 
 		else{ 
-		
+				
         // Send First Frame
         frame.id = data.id;    // Response ID
 
@@ -85,7 +85,7 @@ bool can_tp_transmit(can_idx_t can_idx, can_msg_t data, uint16 data_length) {
             
 						cf.len = bytes_to_copy + 1; //Length of the Consecutive Frame
 						
-						can_transmit(can_idx, cf);
+						can_transmit(can_idx,cf);
 						
 						offset += bytes_to_copy;
 						sn = (sn+1) % 16;           //When sn reaches 15 it will wraparound and set it to zero
