@@ -1,5 +1,7 @@
-#include "cantp.h"
 
+#include "cantp.h"
+//uint16 i;
+//extern uint16 i;
 bool can_tp_transmit(can_idx_t can_idx, can_msg_t data, uint16 data_length) {
 	
 		can_msg_t frame = {0}, fc, cf = {0};
@@ -12,17 +14,23 @@ bool can_tp_transmit(can_idx_t can_idx, can_msg_t data, uint16 data_length) {
 		
         frame.data[0] = SINGLE_FRAME | (data_length & 0x0F);
 		
-        for(i=0; i<data_length;i++){
-						frame.data[i+1]= data.data[i]; // Copying the data into the frame
+        for(i=0; i<7;i++){
+						if(i<data_length){
+								frame.data[i + 1] = data.data[i];  // Copy actual data
+						} 
+						else{
+								frame.data[i + 1] = 0xAA;          // Pad unused bytes with 0xAA
+						}
 				}
+				
+        frame.len = 8;
+				// frame.len = data_length ;
 		
-        frame.len = data_length + 1;
-		
-        can_transmit(can_idx,frame);
+        can_transmit(can_idx,&frame);
 		
     } 
 		else{ 
-				
+		    // delay_ms(10);
         // Send First Frame
         frame.id = data.id;    // Response ID
 
@@ -35,9 +43,10 @@ bool can_tp_transmit(can_idx_t can_idx, can_msg_t data, uint16 data_length) {
 		
         frame.len = 8;
 		
-        can_transmit(can_idx,frame);
+        can_transmit(can_idx,&frame);
 
         // Wait for Flow Control Frame
+				/*
         if (!can_receive(can_idx, &fc)) {
 						
 						// Check if the frame is Flow Control Frame
@@ -61,8 +70,8 @@ bool can_tp_transmit(can_idx_t can_idx, can_msg_t data, uint16 data_length) {
 								return FALSE;
 						}
 			
-				}
-		
+				}*/
+		   // delay_ms(10);
 				// Send Consecutive Frame
 
         while(offset < data_length){
@@ -85,13 +94,12 @@ bool can_tp_transmit(can_idx_t can_idx, can_msg_t data, uint16 data_length) {
             
 						cf.len = bytes_to_copy + 1; //Length of the Consecutive Frame
 						
-						can_transmit(can_idx,cf);
+						can_transmit(can_idx, &cf);
 						
 						offset += bytes_to_copy;
 						sn = (sn+1) % 16;           //When sn reaches 15 it will wraparound and set it to zero
 						frames_sent++;              
-						
-						
+							/*
 						if (block_size != 0 && frames_sent == block_size) {  // Checking if no of frames sent is equal to block size
                 if (!can_receive(can_idx, &fc) || (fc.data[0] & 0xF0) != FLOW_CONTROL_FRAME){
 										return FALSE;
@@ -105,7 +113,9 @@ bool can_tp_transmit(can_idx_t can_idx, can_msg_t data, uint16 data_length) {
 								}
                 frames_sent = 0;
             }
-						delay_ms(stmin); // Delay between Consecutive Frames
+						*/
+						//for(i=0;i<10;i++);
+						delay_ms(10); // Delay between Consecutive Frames
         }
     }
 		return TRUE;
@@ -166,7 +176,7 @@ bool can_tp_receive(can_idx_t can_idx, can_msg_t *data, uint16 data_length) {
         fc.data[2] = 0x00; // STmin
         fc.len = 8;
 
-        can_transmit(can_idx, fc);
+        can_transmit(can_idx, &fc);
 
         // Receive Consecutive Frames
         while (offset < total_len) {
@@ -206,7 +216,7 @@ bool can_tp_receive(can_idx_t can_idx, can_msg_t *data, uint16 data_length) {
                 fc.data[1] = block_size;
                 fc.data[2] = 0x00;
 							
-                can_transmit(can_idx, fc);
+                can_transmit(can_idx, &fc);
             }
         }
 
@@ -218,3 +228,4 @@ bool can_tp_receive(can_idx_t can_idx, can_msg_t *data, uint16 data_length) {
 
     return FALSE; // Not a supported frame type
 }
+
