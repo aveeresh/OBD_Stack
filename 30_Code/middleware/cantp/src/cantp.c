@@ -88,11 +88,14 @@ bool can_tp_transmit(can_idx_t can_idx, can_msg_t data, uint16 data_length) {
 						}
 			
 			
-            for (i = 0; i < bytes_to_copy; i++) {
-								cf.data[i + 1] = data.data[offset + i];
+            for (i = 0; i < 7; i++) {
+								if (i < bytes_to_copy) {
+										cf.data[i + 1] = data.data[offset + i];
+								} else {
+										cf.data[i + 1] = 0xAA;  // Padding unused bytes
+								}
 						}
-            
-						cf.len = bytes_to_copy + 1; //Length of the Consecutive Frame
+						cf.len = 8;  // Always send full 8-byte CAN frames
 						
 						can_transmit(can_idx, &cf);
 						
