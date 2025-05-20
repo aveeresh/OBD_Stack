@@ -117,7 +117,6 @@ bool can_tp_transmit(can_idx_t can_idx, can_msg_t data, uint16 data_length) {
                 frames_sent = 0;
             }
 						*/
-						//for(i=0;i<10;i++);
 						delay_ms(10); // Delay between Consecutive Frames
         }
     }
