@@ -23,6 +23,14 @@ void mode_09_req_handler(can_msg_t OBDRequest)
             response_data[response_len++] = 0x00;
             break;
         }
+				
+			 case 0x01: // VIN Message Count
+        {
+            response_data[response_len++] = 0x49;
+            response_data[response_len++] = 0x01;
+            response_data[response_len++] = 0x03;  // 3 frames to transmit 17-character VIN
+            break;
+        }
 
         case 0x02: // VIN (configured size 17 characters)
         {
@@ -59,16 +67,7 @@ void mode_09_req_handler(can_msg_t OBDRequest)
         }
 
         default:
-        {
-            // Negative Response
-            OBDResp.len = 4;
-            OBDResp.data[0] = 0x03;
-            OBDResp.data[1] = 0x7F;
-            OBDResp.data[2] = 0x09;
-            OBDResp.data[3] = 0x12;
-            can_tp_transmit(can_ctrl_1, OBDResp, OBDResp.len);
-            return;
-        }
+       return;
     }
 
     // Prepare final response frame
