@@ -7,7 +7,7 @@ void mode_03_handler(uint32 id,uint8 len){
 	DTC* dtcs = get_confirmed_dtcs(&dtc_count);   // Get the DTCs 
 
 	
-	if(len != 1){   //Invalid request format
+	if(len != 2){   //Invalid request format
 		response.id = 0x7E8;
 		
 		response.data[0] = SERVICE_03_RESPONSE_SID;   	//Response SID 0x40 + Request SID
