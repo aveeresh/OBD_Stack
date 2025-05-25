@@ -13,7 +13,7 @@ void mode_01_req_handler(can_msg_t OBDRequest) {
         0x45, 0x46, 0x60,
         0x62, 0x63, 0x80,
         0x85, 0x8E, 0xA0, 0xA4,0xA5,
-        0x0C,0x22,0x2C,0x31
+        0x0C,0x22,0x31
     };
 
     uint8 supported = 0;
@@ -79,13 +79,6 @@ void mode_01_req_handler(can_msg_t OBDRequest) {
             OBDResp.data[4] = C;
             OBDResp.data[5] = D;
             len = 6;
-            break;
-				
-        case 0x2C:  // Commanded EGR (%)
-            // Formula: A * 100 / 255
-            A = (PIDValues[PID_IDX_COMMANDED_EGR_2C] * 255) / 100;
-            OBDResp.data[2] = A;
-            len = 3;
             break;
 
          case 0x2D:  // EGR Error
