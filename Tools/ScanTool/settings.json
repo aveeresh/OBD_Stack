@@ -2,32 +2,32 @@
     "supported_can_loggers": [
         {
             "logger": "KORLAN",
-            "channels": "can1"
+            "channels": "CAN1"
         },
         {
             "logger": "WAVESHARE_A",
-            "channels": "can1"
+            "channels": "CAN1"
         },
         {
             "logger": "WAVESHARE_B",
-            "channels": "can1, can2"
+            "channels": "CAN1, CAN2"
         },
         {
             "logger": "PCAN",
-            "channels": "can1"
+            "channels": "CAN1"
         },
         {
             "logger": "PCAN_PRO",
-            "channels": "can1,can2"
+            "channels": "CAN1,CAN2"
         }
     ],
     "selected_can_logger": {
         "logger": "WAVESHARE_A",
         "com_port": "COM3",
-        "channels": "can1",
+        "channels": "CAN1",
         "baud_rate": 500
     },
-    "default_tester_req": {
+    "default_tester_request": {
         "request_id": "0x7E0",
         "request_data": "02 01 0C 00 00 00 00 00"
     }
