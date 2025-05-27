@@ -1,9 +1,7 @@
-
 import serial
 import can
 
 class CanTransceiver:
-    
     def __init__(self, ComPort=None, SerialBaudRate=2000000, DataBits=serial.EIGHTBITS, StopBits=serial.STOPBITS_ONE, ParityType=serial.PARITY_NONE):
         #Store the settings for the WAVESHARE_A USB2CAN device
         print("[WAVESHARE_A][I] Connecting to %s at %d bps" % (ComPort,SerialBaudRate))
@@ -36,7 +34,7 @@ class CanTransceiver:
         SerialData.append(0x55)
          
         #print(bytearray(SerialData))
-        return (SerialData)
+        return(SerialData)
         
     def WriteSerialData(self, SerialData):        
         try:
@@ -47,15 +45,14 @@ class CanTransceiver:
         except:
             return(False)
                           
-    def CreateMessage(self, CanId=None, CanData=None):
-        CanData = CanData or [0] * 64
+    def CreateMessage(self, CanId=None, CanData=[0,0,0,0,0,0,0,0]):
         CanMsg = can.Message(arbitration_id=CanId, data=CanData)
+        
         return(CanMsg)
 
     def SendCanMsg(self, TxCanMsg):
         SerialData = self.AssembleSerialData(TxCanMsg.arbitration_id, TxCanMsg.data)
-        #print(SerialData)
-        #print(self.WriteSerialData(SerialData))
+        
         return(self.WriteSerialData(SerialData))
                 
     def GetCanMsg(self, RxCanMsg):
@@ -84,7 +81,6 @@ class CanTransceiver:
     def SendTxMsgPeriodic(self, msg, cycle_time):
         with can.interface.Bus(interface=self.CanDevice, bitrate=self.BaudRate*1000) as bus:
             bus.send_periodic(msg, cycle_time)
-            
             
     def GetTPCanMsg(self):
         try:
