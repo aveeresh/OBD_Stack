@@ -495,7 +495,7 @@ class Window(QMainWindow, Ui_MainWindow):
             while(Counter>0):
                 #print(Counter)
                 self.statusbar.showMessage("Waiting for response", self.MSG_DISPLAY_TIME)
-                RespMsg = self.CanHandle.GetCanMsg(RespMsg)
+                RespMsg = self.CanHandle.GetTPCanMsg()
                 if RespMsg is not None:
                     if RespMsg.arbitration_id==0x7E8:
                         #print("OBD Resp received")
