@@ -29,7 +29,7 @@
      </font>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -533,28 +533,28 @@
       </property>
       <layout class="QGridLayout" name="gridLayout">
        <item row="7" column="3">
-        <widget class="QLineEdit" name="lineEdit_PhyVal_PID_31">
+        <widget class="QLineEdit" name="lineEdit_PhyVal_Mode_01_PID_31">
          <property name="alignment">
           <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
        <item row="6" column="2">
-        <widget class="QLineEdit" name="lineEdit_RawVal_PID_2C">
+        <widget class="QLineEdit" name="lineEdit_RawVal_Mode_01_PID_2C">
          <property name="alignment">
           <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
        <item row="6" column="3">
-        <widget class="QLineEdit" name="lineEdit_PhyVal_PID_2C">
+        <widget class="QLineEdit" name="lineEdit_PhyVal_Mode_01_PID_2C">
          <property name="alignment">
           <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
        <item row="7" column="2">
-        <widget class="QLineEdit" name="lineEdit_RawVal_PID_31">
+        <widget class="QLineEdit" name="lineEdit_RawVal_Mode_01_PID_31">
          <property name="alignment">
           <set>Qt::AlignCenter</set>
          </property>
@@ -589,7 +589,7 @@
         </widget>
        </item>
        <item row="2" column="2">
-        <widget class="QLineEdit" name="lineEdit_RawVal_PID_04">
+        <widget class="QLineEdit" name="lineEdit_RawVal_Mode_01_PID_04">
          <property name="alignment">
           <set>Qt::AlignCenter</set>
          </property>
@@ -634,7 +634,7 @@
         </widget>
        </item>
        <item row="4" column="3">
-        <widget class="QLineEdit" name="lineEdit_PhyVal_PID_0C">
+        <widget class="QLineEdit" name="lineEdit_PhyVal_Mode_01_PID_0C">
          <property name="alignment">
           <set>Qt::AlignCenter</set>
          </property>
@@ -651,7 +651,7 @@
         </widget>
        </item>
        <item row="2" column="3">
-        <widget class="QLineEdit" name="lineEdit_PhyVal_PID_04">
+        <widget class="QLineEdit" name="lineEdit_PhyVal_Mode_01_PID_04">
          <property name="alignment">
           <set>Qt::AlignCenter</set>
          </property>
@@ -709,14 +709,14 @@
         </widget>
        </item>
        <item row="5" column="3">
-        <widget class="QLineEdit" name="lineEdit_PhyVal_PID_22">
+        <widget class="QLineEdit" name="lineEdit_PhyVal_Mode_01_PID_22">
          <property name="alignment">
           <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
        <item row="5" column="2">
-        <widget class="QLineEdit" name="lineEdit_RawVal_PID_22">
+        <widget class="QLineEdit" name="lineEdit_RawVal_Mode_01_PID_22">
          <property name="alignment">
           <set>Qt::AlignCenter</set>
          </property>
@@ -768,7 +768,7 @@
         </widget>
        </item>
        <item row="4" column="2">
-        <widget class="QLineEdit" name="lineEdit_RawVal_PID_0C">
+        <widget class="QLineEdit" name="lineEdit_RawVal_Mode_01_PID_0C">
          <property name="alignment">
           <set>Qt::AlignCenter</set>
          </property>
@@ -848,14 +848,14 @@
         </widget>
        </item>
        <item row="3" column="3">
-        <widget class="QLineEdit" name="lineEdit_PhyVal_PID_05">
+        <widget class="QLineEdit" name="lineEdit_PhyVal_Mode_01_PID_05">
          <property name="alignment">
           <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
        <item row="3" column="2">
-        <widget class="QLineEdit" name="lineEdit_RawVal_PID_05">
+        <widget class="QLineEdit" name="lineEdit_RawVal_Mode_01_PID_05">
          <property name="alignment">
           <set>Qt::AlignCenter</set>
          </property>
@@ -1159,14 +1159,14 @@
         </widget>
        </item>
        <item row="2" column="3">
-        <widget class="QLineEdit" name="lineEdit_Val_PID_02">
+        <widget class="QLineEdit" name="lineEdit_PhyVal_Mode_09_PID_02">
          <property name="alignment">
           <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
        <item row="2" column="2">
-        <widget class="QLineEdit" name="lineEdit_RawVal_PID_02">
+        <widget class="QLineEdit" name="lineEdit_RawVal_Mode_09_PID_02">
          <property name="alignment">
           <set>Qt::AlignCenter</set>
          </property>
@@ -1203,7 +1203,11 @@
         </widget>
        </item>
        <item row="4" column="3">
-        <widget class="QLineEdit" name="lineEdit_Val_PID_04"/>
+        <widget class="QLineEdit" name="lineEdit_PhyVal_Mode_09_PID_04">
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
        </item>
        <item row="0" column="0">
         <widget class="QLabel" name="label_29">
@@ -1224,7 +1228,11 @@
         </widget>
        </item>
        <item row="4" column="2">
-        <widget class="QLineEdit" name="lineEdit_RawVal_PID_5"/>
+        <widget class="QLineEdit" name="lineEdit_RawVal_Mode_09_PID_04">
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
        </item>
        <item row="1" column="0">
         <widget class="QLabel" name="label_44">
@@ -1247,10 +1255,18 @@
         </widget>
        </item>
        <item row="1" column="2">
-        <widget class="QLineEdit" name="lineEdit_RawVal_PID_01"/>
+        <widget class="QLineEdit" name="lineEdit_RawVal_Mode_09_PID_01">
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
        </item>
        <item row="1" column="3">
-        <widget class="QLineEdit" name="lineEdit_Val_PID_01"/>
+        <widget class="QLineEdit" name="lineEdit_PhyVal_Mode_09_PID_01">
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
