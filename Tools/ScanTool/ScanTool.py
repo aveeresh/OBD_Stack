@@ -82,7 +82,43 @@ class Window(QMainWindow, Ui_MainWindow):
             self.lineEdit_PhyVal_PID_2C,
             self.lineEdit_PhyVal_PID_31,
         ]
-        self.Mode_01_PIDDetails = [
+       
+
+        self.CB_SuppPIDList = [
+        self.checkBox_01,
+        self.checkBox_02,
+        self.checkBox_03,
+        self.checkBox_04,
+        self.checkBox_05,
+        self.checkBox_06,
+        self.checkBox_07,
+        self.checkBox_08,
+        self.checkBox_09,
+        self.checkBox_0A,
+        self.checkBox_0B,
+        self.checkBox_0C,
+        self.checkBox_0D,
+        self.checkBox_0E,
+        self.checkBox_0F,
+        self.checkBox_10,
+        self.checkBox_11,
+        self.checkBox_12,
+        self.checkBox_13,
+        self.checkBox_14,
+        self.checkBox_15,
+        self.checkBox_16,
+        self.checkBox_17,
+        self.checkBox_18,
+        self.checkBox_19,
+        self.checkBox_1A,
+        self.checkBox_1B,
+        self.checkBox_1C,
+        self.checkBox_1D,
+        self.checkBox_1E,
+        self.checkBox_1F,
+        self.checkBox_20,
+        ]
+        self.PIDDetails = [
             #PID $04
             {
                 'num_bytes' : 1,
@@ -137,42 +173,7 @@ class Window(QMainWindow, Ui_MainWindow):
                 'num_bytes' : 16,
                 'type'      : 'ascii'
             },
-        ]
-
-        self.CB_SuppPIDList = [
-        self.checkBox_01,
-        self.checkBox_02,
-        self.checkBox_03,
-        self.checkBox_04,
-        self.checkBox_05,
-        self.checkBox_06,
-        self.checkBox_07,
-        self.checkBox_08,
-        self.checkBox_09,
-        self.checkBox_0A,
-        self.checkBox_0B,
-        self.checkBox_0C,
-        self.checkBox_0D,
-        self.checkBox_0E,
-        self.checkBox_0F,
-        self.checkBox_10,
-        self.checkBox_11,
-        self.checkBox_12,
-        self.checkBox_13,
-        self.checkBox_14,
-        self.checkBox_15,
-        self.checkBox_16,
-        self.checkBox_17,
-        self.checkBox_18,
-        self.checkBox_19,
-        self.checkBox_1A,
-        self.checkBox_1B,
-        self.checkBox_1C,
-        self.checkBox_1D,
-        self.checkBox_1E,
-        self.checkBox_1F,
-        self.checkBox_20,
-        ]
+  		]
 
     def ConnectSignalsSlots(self):
         self.actionConnect.triggered.connect(self.Connect)
@@ -227,11 +228,11 @@ class Window(QMainWindow, Ui_MainWindow):
                     #print(CurrentTab)
 
                     if CurrentTab=='Mode_01':
-                        self.ProcessMode_01_Request()
+                        self.ProcessMode_01()
                     elif CurrentTab=='Mode_03':
-                        self.ProcessMode_03_Request()
+                        self.ProcessMode_03()
                     elif CurrentTab=='Mode_09':
-                        self.ProcessMode_09_Request()
+                        self.ProcessMode_09()
                     elif CurrentTab=='Mode_01_Supp_PIDs':
                         self.UpdateSuppPIDDisplay()
         except RuntimeError as e:
@@ -283,7 +284,7 @@ class Window(QMainWindow, Ui_MainWindow):
         else:
             self.statusbar.showMessage("Unable to get PID support data", self.MSG_DISPLAY_TIME)
 
-    def ProcessMode_01_Request(self):
+    def ProcessMode_01(self):
         P2_TIME_MS = 5
 
     # PID configuration: { PID: (Raw QLineEdit name, Physical QLineEdit name, num_bytes, offset, factor) }
@@ -330,7 +331,7 @@ class Window(QMainWindow, Ui_MainWindow):
 
         return
                 
-    def ProcessMode_03_Request(self):
+    def ProcessMode_03(self):
         P2_TIME_MS = 5
         dtc_description = {
             "P0100": "Mass or Volume Air Flow Circuit Malfunction",
@@ -383,7 +384,7 @@ class Window(QMainWindow, Ui_MainWindow):
         return
         
         
-    def ProcessMode_09_Request(self):
+    def ProcessMode_09(self):
         P2_TIME_MS = 5
 
     # PID → Description
@@ -469,14 +470,14 @@ class Window(QMainWindow, Ui_MainWindow):
 
             if RespMsg is not None:
                 if RespMsg.arbitration_id==0x7E8:
-                    self.lineEdit_RespId.setText("0x" + str(hex(RespMsg.arbitration_id))[2:].upper())
+                    self.lineEdit_RespId.setText(str(hex(RespMsg.arbitration_id)))
 
                     RespData = list(RespMsg.data)
                     #print(RespData)
                     RespDataStr = ""
                     for Byte in RespData:
                         RespDataStr += format(Byte, '02x') + " "
-                    self.lineEdit_RespData.setText(RespDataStr.upper())
+                    self.lineEdit_RespData.setText(RespDataStr)
                 else:
                     self.lineEdit_RespId.setText("no response")
                     self.lineEdit_RespData.setText("no response")
@@ -575,7 +576,7 @@ class Settings(QDialog, Ui_Settings):
     def connectSignalsSlots(self):
         self.Btn_Ok.clicked.connect(self.OkClicked)
         self.pushButton_Refresh.clicked.connect(self.PopulateComPorts)
-        self.pushButton_Refresh.setEnabled(False)
+       # self.pushButton_Refresh.setEnabled(False)
         self.comboBox_Logger.currentTextChanged.connect(self.NewLoggerSelected)
 
     def GetSerialPortsList(self):
@@ -600,11 +601,11 @@ class Settings(QDialog, Ui_Settings):
         #Enable the baudrate combobox for the supported logger
         if logger_selected=="WAVESHARE_A":
             self.comboBox_ComPort.setEnabled(True)
-            self.pushButton_Refresh.setEnabled(True)
+      #      self.pushButton_Refresh.setEnabled(True)
             self.PopulateComPorts()
         else:
             self.comboBox_ComPort.setEnabled(False)
-            self.pushButton_Refresh.setEnabled(False)
+         #   self.pushButton_Refresh.setEnabled(False)
 
         for logger in all_loggers:
            if logger['logger']==logger_selected:
@@ -612,12 +613,12 @@ class Settings(QDialog, Ui_Settings):
 
         #Enable/Disable CAN channel if supported for selected logger
         supported_can_channels = logger['channels']
-        if 'CAN1' in supported_can_channels:
+        if 'can1' in supported_can_channels:
             self.checkBox_CAN1.setEnabled(True)
         else:
             self.checkBox_CAN1.setEnabled(False)
 
-        if 'CAN2' in supported_can_channels:
+        if 'can2' in supported_can_channels:
             self.checkBox_CAN2.setEnabled(True)
         else:
             self.checkBox_CAN2.setEnabled(False)
@@ -645,13 +646,13 @@ class Settings(QDialog, Ui_Settings):
         self.JsonData['selected_can_logger']['com_port'] = self.comboBox_ComPort.currentText()
         self.JsonData['selected_can_logger']['baud_rate'] = int(self.comboBox_BaudRate.currentText())
         if self.checkBox_CAN1.isChecked() and self.checkBox_CAN2.isChecked():
-            self.JsonData['selected_can_logger']['channels'] = "CAN1,CAN2"
+            self.JsonData['selected_can_logger']['channels'] = "can1,can2"
         elif self.checkBox_CAN1.isChecked():
-            self.JsonData['selected_can_logger']['channels'] = "CAN1"
+            self.JsonData['selected_can_logger']['channels'] = "can1"
         elif self.checkBox_CAN2.isChecked():
-            self.JsonData['selected_can_logger']['channels'] = "CAN2"
+            self.JsonData['selected_can_logger']['channels'] = "can2"
         else:
-            self.JsonData['selected_can_logger']['channels'] = "CAN1"
+            self.JsonData['selected_can_logger']['channels'] = "can1"
 
         #print(self.JsonData)
 
@@ -661,8 +662,7 @@ class Settings(QDialog, Ui_Settings):
             print("[SCAN TOOL][I] Settings written to file")
         except:
             print("[SCAN TOOL][E] JSON DATA - Unable to write to file")
-
-
+			
 def main():
     app = QApplication(sys.argv)
     win = Window()
@@ -671,4 +671,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
