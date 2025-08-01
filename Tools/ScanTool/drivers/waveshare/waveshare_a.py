@@ -81,3 +81,70 @@ class CanTransceiver:
     def SendTxMsgPeriodic(self, msg, cycle_time):
         with can.interface.Bus(interface=self.CanDevice, bitrate=self.BaudRate*1000) as bus:
             bus.send_periodic(msg, cycle_time)
+            
+    def GetTPCanMsg(self):
+        try:
+            full_data = []
+            data_length = 0
+            next_seq_num = 1
+
+            while True:
+                received_data = self.SerialHandle.read(13)
+                received_data = list(received_data)
+                print(received_data)
+                if len(received_data) != 13 or received_data[0] != 0xAA or received_data[len(received_data)-1] != 0x55:
+                    #print("Invalid frame")
+                    return(None)  #invalid frame
+
+                pci_byte = received_data[4]
+                #print(pci_byte)
+                
+                data_bytes = received_data[5:11]  #7 data bytes
+                arb_id = (received_data[3] << 8) | received_data[2]
+                
+                # Single Frame (SF)
+                if(pci_byte & 0xF0) == 0x00:
+                    data_length = pci_byte & 0x0F
+                    RxCanMsg = self.CreateMessage()
+                    RxCanMsg.arbitration_id = (received_data[3]<<8 | received_data[2])
+                    
+                    total_data = received_data[4 : 5 + data_length]  # PCI + actual data
+                    RxCanMsg.data[:len(total_data)] = total_data
+                    RxCanMsg.data = RxCanMsg.data[:len(total_data)]
+                    
+                    print(list(RxCanMsg.data[:data_length]))
+                    return RxCanMsg
+
+                
+                # First Frame 
+                elif(pci_byte & 0xF0) == 0x10:
+                    data_length = ((pci_byte & 0x0F) << 8) | data_bytes[0]
+                    #RxCanMsg = self.CreateMessage()
+                    #RxCanMsg.arbitration_id = (received_data[3]<<8 | received_data[2])
+                    full_data = received_data[5 : 12]
+                    print(list(full_data))
+                    continue
+                
+                # Consecutive Frame 
+                elif (pci_byte & 0xF0) == 0x20:
+                    seq_num = pci_byte & 0x0F
+                    if seq_num != next_seq_num:
+                        print(f"Sequence number mismatch. Expected {next_seq_num}, got {seq_num}")
+                        return None
+                    next_seq_num = (next_seq_num + 1) % 16
+                    full_data.extend(received_data[5:12])
+
+                    if len(full_data) >= data_length + 1:  # +1 for PCI from First Frame
+                        RxCanMsg = self.CreateMessage()
+                        RxCanMsg.arbitration_id = (received_data[3] << 8) | received_data[2]
+                        RxCanMsg.data[:data_length + 1] = full_data[:data_length + 1]
+                        RxCanMsg.data = RxCanMsg.data[:data_length + 1]
+                        print(list(RxCanMsg.data))
+                        return RxCanMsg
+
+                else:
+                    continue  
+                
+        except:
+            return None
+
